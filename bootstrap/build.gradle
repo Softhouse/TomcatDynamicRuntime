@@ -1,0 +1,19 @@
+// TDR Bootstrap
+        
+version = "0.0.1"
+
+dependencies {
+    	
+	compile tomcatCoyote
+	compile tomcatCatalina
+	compile karafMain
+	compile elApi 	
+	compile jclClassLoader
+}
+
+// deploy task for deploying bundle to development env
+task deploy (type: Copy, overwrite: true) {
+	dependsOn jar
+	from 'build/libs'
+	into tomcatLibPath
+}

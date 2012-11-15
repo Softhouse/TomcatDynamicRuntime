@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-fragment>
+
+	<listener>
+		<listener-class>
+			org.tdr.spring.runtime.DynamicContextLoaderListener
+		</listener-class>
+	</listener>
+	
+</web-fragment>

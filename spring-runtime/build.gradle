@@ -1,0 +1,15 @@
+// Spring Runtime
+        
+version = "0.0.1"
+
+jar {
+	manifest { from ('template.mf') }
+}
+
+dependencies {
+   
+	compile commonsLogging
+	compile springWeb
+	compile elApi
+	compile project(':bootstrap')
+}
