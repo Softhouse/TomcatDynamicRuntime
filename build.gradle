@@ -40,6 +40,15 @@ subprojects {
 	    mavenRepo(url: 'http://caucho.com/m2')
 	}
 	
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				// TODO: Define repo on Github
+				repository(url: "file://$projectDir/../repository/releases/")
+			}
+		}
+	}
+	
 	dependencies {
 	}
 	

@@ -1,0 +1,3 @@
+To include runtimes add them in the MANIFEST.MF to the header 'TDR-Runtimes'.
+Example:
+TDR-Runtimes: JSF Runtime,Spring Runtime

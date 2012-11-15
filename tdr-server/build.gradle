@@ -1,0 +1,73 @@
+// Tomcat TDR Server Distribution 
+        
+version = "0.0.1"
+
+def tomcatVersion = "7.0.32"
+def karafVersion = "2.3.0"
+def tomcat = new ArtifactDownloader(file("$buildDir"), "http://apache.mirror3.ip-only.net/tomcat/tomcat-7/v" + tomcatVersion + "/bin/")
+def karaf = new ArtifactDownloader(file("$buildDir"), "http://apache.mirror3.ip-only.net/karaf/" + karafVersion + "/")
+
+dependencies {
+	compile project(':bootstrap')
+	compile jclClassLoader
+	compile commonsLogging
+}
+
+processResources << {
+	
+	println("Downloading Apache Tomcat v" + tomcatVersion)
+	copy {
+		from tarTree(tomcat.getResource("apache-tomcat-" + tomcatVersion + ".tar.gz"))
+		into "$buildDir/dist"
+	}
+	ant.move(file: "$buildDir/dist/apache-tomcat-" + tomcatVersion, toFile: "$buildDir/dist/tdr-server-" + version)
+	delete "$buildDir/dist/tdr-server-" + version + "/webapps"
+	println("Downloading Apache Karaf v" + karafVersion)
+	copy {
+		from tarTree(karaf.getResource("apache-karaf-" + karafVersion + ".tar.gz"))
+		into "$buildDir/dist/tdr-server-" + version
+	}
+	ant.move(file: "$buildDir/dist/tdr-server-" + version + "/apache-karaf-" + karafVersion, toFile: "$buildDir/dist/tdr-server-" + version + "/osgi")
+	
+	copy {
+		 from "$buildDir/resources/main/"
+		 into "$buildDir/dist/tdr-server-" + version
+	}
+	
+	copy {
+		into "$buildDir/dist/tdr-server-" + version + "/lib"
+		from configurations.compile
+		include 'bootstrap**'
+		include 'jcl**'
+		include 'commons-logging**'
+}
+
+}
+
+task dist(type: Zip, dependsOn: [clean, processResources]) {
+	from "$buildDir/dist/"
+}
+
+
+
+/*
+ * Class for downloading artifacts
+ * TODO: Move this to a shared build file
+ */
+class ArtifactDownloader {
+
+	String baseDir
+	String baseUrl
+	
+	ArtifactDownloader(File baseDir, String baseUrl) {
+		this.baseDir = baseDir
+		this.baseUrl = baseUrl
+	}	
+	
+	public File getResource(String resource) {
+		File resourceFile = new File(baseDir.toString() + "/" + resource)
+		resourceFile.bytes = new URL(baseUrl + resource).bytes
+		return resourceFile
+	}
+	
+}
