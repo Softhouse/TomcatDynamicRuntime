@@ -2,6 +2,8 @@
         
 version = "0.0.1"
 
+// TODO: Something changed in Tomcat Version 7.0.29 and 7.0.32??
+
 def tomcatVersion = "7.0.32"
 def karafVersion = "2.3.0"
 def tomcat = new ArtifactDownloader(file("$buildDir"), "http://apache.mirror3.ip-only.net/tomcat/tomcat-7/v" + tomcatVersion + "/bin/")
@@ -40,7 +42,7 @@ processResources << {
 		include 'bootstrap**'
 		include 'jcl**'
 		include 'commons-logging**'
-}
+	}
 
 }
 

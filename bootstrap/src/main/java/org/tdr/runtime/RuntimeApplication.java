@@ -541,16 +541,22 @@ public class RuntimeApplication {
 		ArrayList<String> resourcePathList = new ArrayList<String>();
 		this.hasBeenRefreshed = false; // TODO: Make this fully access safe
 		StringBuilder resourcePaths = new StringBuilder();
+		String catalinaWebapps = System.getProperty("catalina.home") + "/webapps";
 		for ( TDRBundle runtimeBundle : this.currentRuntimes ) {
-			resourcePaths.append(",/=");
 			String resourcePath = runtimeBundle.getResourcePath();
-			if ( ! resourcePathList.contains(resourcePath) ) {
+			if ( ! resourcePathList.contains(resourcePath) && ! resourcePath.startsWith(catalinaWebapps) ) {
+				resourcePathList.add(resourcePath);
+				resourcePaths.append(",/=");
 				resourcePaths.append(runtimeBundle.getResourcePath());
 				for ( TDRBundle fragment : this.fragments.get(runtimeBundle) ) {
-					resourcePaths.append(",/=");
-					resourcePaths.append(fragment.getResourcePath());
+					resourcePath = fragment.getResourcePath();
+					if ( ! resourcePathList.contains(resourcePath) && ! resourcePath.startsWith(catalinaWebapps) ) {
+						resourcePathList.add(resourcePath);
+						resourcePaths.append(",/=");
+						resourcePaths.append(resourcePath);
+					}
 				}
-				resourcePathList.add(resourcePath);
+				
 			}
 		}
 		log.info("Resource paths: " + resourcePaths);
