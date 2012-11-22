@@ -121,7 +121,12 @@ public class OSGiFileDirContext extends VirtualDirContext {
 				realPath = runtimeFile.getAbsolutePath();
 			}
 		}
-		log.info("Real path: " + realPath);
+		if ( realPath == null ) {
+			log.warn("Path: " + path + " is resolved to null.");
+		}
+		else {
+			log.info("Real path: " + realPath);
+		}
 		return realPath;
 	}
 	

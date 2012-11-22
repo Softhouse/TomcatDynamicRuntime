@@ -209,6 +209,7 @@ public class OSGiWebAppLoader extends WebappClassLoader {
 			name = name.substring(1);
 		}
 		*/
+
 		return super.getResourceAsStream(name);
 	}
 	

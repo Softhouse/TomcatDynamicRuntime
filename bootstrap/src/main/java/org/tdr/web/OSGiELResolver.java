@@ -46,6 +46,7 @@ public class OSGiELResolver extends ELResolver {
 	protected Object getServiceByName(String name) {
 		
 		// TODO: How to unget services??
+		// TODO: If service name is not present -> use class name instead
 		
 		try {
 			ServiceReference[] serviceReferences = this.bundleContext.getAllServiceReferences(null, null);
