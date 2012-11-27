@@ -1,4 +1,4 @@
-package org.tdr.jsf.runtime;
+package org.tdr.jsf.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
