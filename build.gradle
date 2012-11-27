@@ -43,7 +43,7 @@ subprojects {
 	uploadArchives {
 		repositories {
 			mavenDeployer {
-				repository(url: "file://$projectDir/../../TDR-Maven-Repo/repository/releases/")
+				repository(url: "file://$projectDir/../../TDR-Repo/repository/releases/")
 			}
 		}
 	}
