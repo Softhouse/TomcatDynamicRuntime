@@ -192,7 +192,10 @@ public class TDRBundle {
 		
 	public boolean isModified() {
 		File bundleBaseDir = new File(this.basePath);
-		return ( bundleBaseDir.lastModified() < this.bundle.getLastModified() );
+		if ( bundleBaseDir.exists() ) {
+			return ( bundleBaseDir.lastModified() < this.bundle.getLastModified() );
+		}
+		return false;
 	}
 	public void install() throws IOException {
 				
