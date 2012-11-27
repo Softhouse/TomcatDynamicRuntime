@@ -2,12 +2,14 @@
         
 version = "0.0.1"
 
-// TODO: Something changed in Tomcat Version 7.0.29 and 7.0.32??
-
 def tomcatVersion = "7.0.32"
 def karafVersion = "2.3.0"
 def tomcat = new ArtifactDownloader(file("$buildDir"), "http://apache.mirror3.ip-only.net/tomcat/tomcat-7/v" + tomcatVersion + "/bin/")
 def karaf = new ArtifactDownloader(file("$buildDir"), "http://apache.mirror3.ip-only.net/karaf/" + karafVersion + "/")
+
+jar {
+	enabled = false
+}
 
 dependencies {
 	compile project(':bootstrap')
@@ -50,11 +52,13 @@ task dist(type: Zip, dependsOn: [clean, processResources]) {
 	from "$buildDir/dist/"
 }
 
-
+artifacts {
+	archives file: file("$buildDir/distributions/tdr-server-" + version + ".zip"), name: 'tdr-server', type: 'zip', builtBy: dist
+}
 
 /*
  * Class for downloading artifacts
- * TODO: Move this to a shared build file
+ * TODO: Move this to a shared build file => apply from: "file://$projectDir/../common.gradle"
  */
 class ArtifactDownloader {
 
