@@ -51,9 +51,11 @@ public class OSGiELResolver extends ELResolver {
 		try {
 			ServiceReference[] serviceReferences = this.bundleContext.getAllServiceReferences(null, null);
 			for ( ServiceReference serviceRef : serviceReferences ) {
-				String serviceName = (String) serviceRef.getProperty("serviceName");
-				//log.info("Service Ref: " + serviceRef + ", service name: " + serviceName);
-				if ( name.equals(serviceName) ) {
+				String serviceName = (String) serviceRef.getProperty("osgi.service.blueprint.compname");
+				if ( serviceName == null ) {
+					serviceName = (String) serviceRef.getProperty("serviceName");
+				}
+				if ( serviceName != null && name.equals(serviceName) ) {
 					return this.bundleContext.getService(serviceRef);
 				}
 			}
