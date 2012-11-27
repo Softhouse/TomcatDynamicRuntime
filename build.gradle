@@ -43,8 +43,7 @@ subprojects {
 	uploadArchives {
 		repositories {
 			mavenDeployer {
-				// TODO: Define repo on Github
-				repository(url: "file://$projectDir/../repository/releases/")
+				repository(url: "file://$projectDir/../../TDR-Maven-Repo/repository/releases/")
 			}
 		}
 	}
