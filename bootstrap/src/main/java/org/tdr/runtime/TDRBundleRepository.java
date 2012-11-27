@@ -57,8 +57,9 @@ public final class TDRBundleRepository implements BundleListener {
 		for ( Bundle bundle : bundleContext.getBundles() ) {
 			if ( bundle.getState() == Bundle.ACTIVE && 
 				 ( TDRBundle.isTDRBundle(bundle) ) ) {
-				TDRBundle tdrBundle = this.addBundle(bundle);
-				tdrBundle.start();
+//				TDRBundle tdrBundle = this.addBundle(bundle);
+//				tdrBundle.start();
+				this.installBundle(bundle, true);
 			}
 		}
 	}
@@ -87,11 +88,19 @@ public final class TDRBundleRepository implements BundleListener {
 		return tdrBundle;
 	}
 	
+	
 	private TDRBundle installBundle(Bundle bundle) {
+		return this.installBundle(bundle, false);
+	}
+	
+	private TDRBundle installBundle(Bundle bundle, boolean atServerStartup) {
 		log.info("Installing bundle: " + bundle.getBundleId());
 		TDRBundle tdrBundle = this.addBundle(bundle);
 		try {
-			tdrBundle.install();
+			if ( !atServerStartup || 
+				 ( atServerStartup && tdrBundle.isModified() ) ) {
+				tdrBundle.install();
+			}
 			tdrBundle.start();
 			return tdrBundle;
 		}

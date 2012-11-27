@@ -190,6 +190,10 @@ public class TDRBundle {
 	
 	public Bundle getBundle() { return this.bundle; }
 		
+	public boolean isModified() {
+		File bundleBaseDir = new File(this.basePath);
+		return ( bundleBaseDir.lastModified() < this.bundle.getLastModified() );
+	}
 	public void install() throws IOException {
 				
 		File bundleBaseDir = new File(this.basePath);
