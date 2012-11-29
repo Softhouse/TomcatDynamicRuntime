@@ -145,6 +145,10 @@ public class WebFragmentDeployer implements RuntimeDeployer {
 						servlet.addMapping(urlPattern);
 					}
 				}
+				Map<String,String> initParameters = servletDef.getParameterMap();
+				for ( String initParamName : initParameters.keySet() ) {
+					servlet.setInitParameter(initParamName, initParameters.get(initParamName));
+				}
 				if ( servletDef.getLoadOnStartup() != null ) {
 					servlet.setLoadOnStartup(servletDef.getLoadOnStartup());				
 					if ( servletDef.getLoadOnStartup() == 1 ) {
