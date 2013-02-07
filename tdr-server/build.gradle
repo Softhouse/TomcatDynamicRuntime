@@ -1,6 +1,6 @@
 // Tomcat TDR Server Distribution 
         
-version = "0.0.1"
+version = "0.0.2"
 
 def tomcatVersion = "7.0.35"
 def karafVersion = "2.3.0"
