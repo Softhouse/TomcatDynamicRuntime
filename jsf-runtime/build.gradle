@@ -15,4 +15,13 @@ dependencies {
 	compile project(':bootstrap')	
 }
 
-// TODO: Take libs from dependencies
+
+processResources << {
+    copy {
+        into "$buildDir/resources/main/lib"
+        from configurations.compile
+        include 'jsf-**'
+        //include 'jboss-el-**'
+    }
+}
+
