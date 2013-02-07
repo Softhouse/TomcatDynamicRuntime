@@ -1,0 +1,32 @@
+// Web Resource Runtime
+        
+version = "0.0.1"
+
+jar {
+	manifest { from ('template.mf') }
+}
+
+dependencies {
+
+    compile commonsLogging
+    compile less4j
+    compile smartsprites
+	compile project(':bootstrap')
+    compile project(':web-resource-processing')
+}
+
+processResources << {
+    copy {
+        into "$buildDir/resources/main/lib"
+        from configurations.compile
+        include 'less4j**'
+        include 'commons-io**'
+        include 'smartsprites-**'
+        include 'antlr-**'
+        include 'commons-beanutils**'
+        include 'google-collections**'
+        include 'commons-lang**'
+        include 'web-resource-processing**'
+    }
+}
+

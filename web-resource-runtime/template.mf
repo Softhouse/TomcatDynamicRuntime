@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: web-resource-runtime
+Bundle-Version: 0.0.1
+Bundle-Name: Web Resource Runtime
+TDR-Deployer-Factory: org.tdr.webresource.deployer.WebResourceDeployerFactory

@@ -1,0 +1,54 @@
+//
+// public.list.less
+//
+// Public List modules
+//
+// @project Telenor NSI
+// @version
+// @author
+// @copyright 2011-2012
+// @license Copyright Telenor Sverige AB
+//
+// ------------------------------------------------
+
+// ------------------------------------------------
+// @section Linklist
+// ------------------------------------------------
+
+h4.telenor-linklist-title {
+	
+}
+ul.telenor-linklist-items {
+	#linklist > .items();        
+}
+
+ul.telenor-linklist-horizontal-items {
+	#linklist > .horizontal-items();        
+}
+
+// ------------------------------------------------
+// @section Contentlist
+// ------------------------------------------------
+
+h4.telenor-contentlist-title {
+	padding: @baseSpacing/2 @baseSpacing;
+}
+
+ul.telenor-contentlist-items {
+	#contentlist > .items();
+}
+
+.telenor-contentlist-title + .telenor-contentlist-items {
+	margin-top: 0;
+}
+
+// ------------------------------------------------
+// @section Usplist
+// ------------------------------------------------
+
+ul.telenor-usplist-items {
+	#bullet > .usplist();        
+}
+ul.telenor-checklist-items {
+	#bullet > .checklist();        
+}

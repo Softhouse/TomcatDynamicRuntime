@@ -1,0 +1,182 @@
+//
+// public.heading.less
+//
+// Public Headings module
+//
+// @project Telenor NSI
+// @version
+// @author
+// @copyright 2011-2012
+// @license Copyright Telenor Sverige AB
+//
+//------------------------------------------------
+
+// ------------------------------------------------
+// @section Public Headings
+// ------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {	
+	
+	&.telenor-accent {
+		 #state > .is-accent();
+	}
+	&.telenor-variant {
+		 #state > .is-variant();
+	}
+
+	// thin
+	&.telenor-thin {
+		 #state > .is-thin();
+	}
+	&.telenor-thin-accent {
+		#state > .is-thin();
+		#state > .is-accent();
+	}
+	&.telenor-thin-variant {
+		#state > .is-thin();
+		#state > .is-variant();
+	}
+ 
+	// medium
+	&.telenor-medium {
+		#state > .is-medium();
+	}
+	&.telenor-medium-accent {
+		#state > .is-medium();
+		#state > .is-accent();
+	}
+	&.telenor-medium-variant {
+		#state > .is-medium();
+		#state > .is-variant();
+	}
+	       
+	// bold (use bold text <strong> instead)	
+	// italic (use emphasis <em> instead)
+	// Applies to all headings!
+}
+
+
+h1 {	
+	
+	// KILO 30 px
+	
+	&.telenor-kilo {
+		#base > .hkilo();
+	}
+	&.telenor-kilo-accent {
+		#base > .hkilo();
+		#state > .is-accent();
+	}
+	&.telenor-kilo-variant {
+		#base > .hkilo();
+		#state > .is-variant();
+	}
+
+	// thin
+	&.telenor-kilo-thin {
+		#base > .hkilo();
+		#state > .is-thin();
+	}
+	&.telenor-kilo-thin-accent {
+		#base > .hkilo();
+		#state > .is-thin();
+		#state > .is-accent();
+	}
+	&.telenor-kilo-thin-variant {
+		#base > .hkilo();
+		#state > .is-thin();
+		#state > .is-variant();
+	}
+	
+	// MEGA 36 px
+	
+	&.telenor-mega {
+		#base > .hmega();
+	}
+	&.telenor-mega-accent {
+		#base > .hmega();
+		#state > .is-accent();
+	}
+	&.telenor-mega-variant {
+		#base > .hmega();
+		#state > .is-variant();
+	}
+
+	// thin
+	&.telenor-mega-thin {
+		#base > .hmega();
+		#state > .is-thin();
+	}
+	&.telenor-mega-thin-accent {
+		#base > .hmega();
+		#state > .is-thin();
+		#state > .is-accent();
+	}
+	&.telenor-mega-thin-variant {
+		#base > .hmega();
+		#state > .is-thin();
+		#state > .is-variant();
+	}
+
+	// GIGA 72px
+	
+	&.telenor-giga {
+		#base > .hgiga();
+	}
+	&.telenor-giga-accent {
+		#base > .hgiga();
+		#state > .is-accent();
+	}
+	&.telenor-giga-variant {
+		#base > .hgiga();
+		#state > .is-variant();
+	}
+
+	// thin
+	&.telenor-giga-thin {
+		#base > .hgiga();
+		#state > .is-thin();
+	}
+	&.telenor-giga-thin-accent {
+		#base > .hgiga();
+		#state > .is-thin();
+		#state > .is-accent();
+	}
+	&.telenor-giga-thin-variant {
+		#base > .hgiga();
+		#state > .is-thin();
+		#state > .is-variant();
+	}      
+	   
+}
+
+h6 {
+    &.telenor-milli {
+        #base > .hmilli();
+    }
+    &.telenor-milli-accent {
+        #base > .hmilli();
+        #state > .is-accent();
+    }
+    &.telenor-milli-variant {
+        #base > .hmilli();
+        #state > .is-variant();
+    }
+
+    // thin
+    &.telenor-milli-thin {
+        #base > .hmilli();
+        #state > .is-thin();
+    }
+    &.telenor-milli-thin-accent {
+        #base > .hmilli();
+        #state > .is-thin();
+        #state > .is-accent();
+    }
+    &.telenor-milli-thin-variant {
+        #base > .hmilli();
+        #state > .is-thin();
+        #state > .is-variant();
+    }
+}
+

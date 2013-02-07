@@ -1,0 +1,13 @@
+// Web Resource Processing 
+        
+version = "0.0.1"
+
+
+dependencies {
+
+    compile commonsLogging
+    compile less4j
+    compile smartsprites
+}
+
+

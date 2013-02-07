@@ -1,0 +1,39 @@
+/**
+ * A simple horizontal sprites test.
+ */
+/** sprite: test; sprite-image: url('img/sprite.png'); sprite-layout: horizontal */
+div.web {
+  color: #111111;
+  width: 17px;
+  height: 17px;
+  background-image: url(img/web.gif); /** sprite-ref: test */
+
+}
+div.pubmed {
+  width: 15px;
+  height: 32px;
+  background-image: url(img/pubmed.gif); /** sprite-ref: test; sprite-alignment: bottom */
+
+}
+div.logo {
+  background-image: url(img/logo.png);  /** sprite-ref: test */
+
+}
+#header {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  background-image: url(img/logo.png); /** sprite-ref: test */
+
+}
+#footer {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  background-image: url(img/logo.png); /** sprite-ref: test */
+
+}

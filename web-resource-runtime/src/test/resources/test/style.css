@@ -1,0 +1,41 @@
+/**
+ * A simple horizontal sprites test.
+ */
+
+/** sprite: test; sprite-image: url('img/sprite.png'); sprite-layout: horizontal */
+div.web {
+  width: 17px;
+  height: 17px;
+  background-image: url(img/web.gif); /** sprite-ref: test */
+}
+
+div.pubmed {
+  width: 15px;
+  height: 32px;
+  background-image: url(img/pubmed.gif); /** sprite-ref: test; sprite-layout: horizontal */
+}
+
+div.logo {
+  background-image: url(img/logo.png); /** sprite-ref: test */
+}
+
+div.logo2 {
+    background-image: url(img/bullet-check.png); /** sprite-ref: test */
+}
+
+div.logo3 {
+    background-image: url(img/bullet-usp.png); /** sprite-ref: test */
+}
+
+div.logo4 {
+    background-image: url(img/icon-cart.png); /** sprite-ref: test; sprite-layout: horizontal */
+}
+
+div.logo5 {
+    background-image: url(img/icon-expand.png); /** sprite-ref: test */
+}
+
+div.logo6 {
+    background-image: url(img/icon-filter.png); /** sprite-ref: test */
+}
+

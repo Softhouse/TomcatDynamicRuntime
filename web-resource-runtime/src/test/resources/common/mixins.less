@@ -1,0 +1,775 @@
+//
+// mixins.less
+//
+// Common module mixins
+//
+// @project Telenor NSI
+// @version
+// @author
+// @copyright 2011-2012
+// @license Copyright Telenor Sverige AB 
+//
+// ------------------------------------------------
+
+// ------------------------------------------------
+// @section Buttons
+// ------------------------------------------------
+
+#button() {
+    
+    .color (@color) {
+        color: @color;
+        text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+        
+        &:hover, &:link, &:visited, &.is-hover {
+    	   color: @color;
+        }
+        
+        &:active, &.is-active {
+            color: @color;
+            text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+        }
+    }
+    
+    .background-hover (@background) {
+    	background: hsl(hue(@background), saturation(@background)+15, lightness(@background));
+        @shadow: inset 0 1px rgba(255,255,255,.3), inset 0 -1px rgba(0,0,0,.25), inset 1px 0 rgba(255,255,255,.1), inset -1px 0 rgba(255,255,255,.1);
+        .box-shadow(@shadow);
+    }
+    
+    .background-active (@background) {
+    	background: hsl(hue(@background), saturation(@background), lightness(@background)-8);
+        @shadow: inset 0 1px 8px rgba(0,0,0,.6), inset 0 -1px 1px rgba(255,255,255,.2), inset 1px 0 1px rgba(0,0,0,.1), inset -1px 0 1px rgba(0,0,0,.1);
+        .box-shadow(@shadow);
+    }
+    
+    .background-disabled (@background) {
+    	background: @background !important;
+        @shadow: inset 0 1px rgba(255,255,255,.2), inset 0 -1px rgba(0,0,0,.15), inset 1px 0 rgba(255,255,255,.05), inset -1px 0 rgba(255,255,255,.05) !important;
+        .box-shadow(@shadow);
+    }
+
+    .background (@background) {
+        background: @background;
+        border: 1px solid @background;
+        @shadow: inset 0 1px rgba(255,255,255,.2), inset 0 -1px rgba(0,0,0,.15), inset 1px 0 rgba(255,255,255,.05), inset -1px 0 rgba(255,255,255,.05);
+        .box-shadow(@shadow);
+
+        &:hover, &.is-hover {
+            #button > .background-hover (@background);
+        }
+        
+        &:active, &.is-active {
+            #button > .background-active (@background);
+        }
+        
+         &:disabled, &.is-disabled, &[disabled] {
+	       #button > .background-disabled (@background);
+	    }
+    }
+    
+    .btn-hover () {
+    	background: @buttonBaseBgColor;
+	    //.box-shadow(inset 0 -1px 5px @buttonBaseBgColor);
+	    .transition(.2s, ease-out, background-color);
+	    color: darken(@buttonBaseTextColor, 10%);
+	}
+	
+	.btn-active () {
+		background: darken(@buttonBaseBgColor, 25%);
+	    @shadow: inset 0 1px 8px rgba(0,0,0,.6), inset 0 -1px 1px rgba(0,0,0,.1), inset 1px 0 1px rgba(0,0,0,.1), inset -1px 0 1px rgba(0,0,0,.1);
+	    .box-shadow(@shadow);
+	    color: @buttonDarkTextColor;
+	    text-shadow: 0 1px 1px darken(@buttonBaseBgColor, 10%);
+	}
+	
+	.btn-disabled () {
+	   background: @buttonBaseBgColor;
+	   .box-shadow(inset 0 -1px 5px darken(@buttonBaseBgColor, 15%));
+	   color: @buttonDisabledTextColor;
+	   text-shadow: none;
+	   .opacity(65);
+	   cursor: default;
+    }
+	
+	.btn-core () {
+		background: @buttonBaseBgColor;
+	    border: 1px solid darken(@buttonBaseBgColor, 20%);
+	    .border-radius(6px);
+	    .box-shadow(inset 0 -1px 5px darken(@buttonBaseBgColor, 15%));
+	    color: @buttonBaseTextColor;
+	    cursor: pointer;
+	    display: inline-block;
+	    .ie7-inline-block();
+	    font-family: @headlineFontFamily;
+	    outline: 0;
+	    padding: 3px 8px;
+	    text-align: center;
+	    text-decoration: none;
+	    vertical-align: middle;
+	    white-space: nowrap;
+	    
+	    &:link, &:visited {
+	    	color: @buttonBaseTextColor;
+	    }
+	    
+	    &:hover, &.is-hover {
+	        #button > .btn-hover ();
+	    }
+	    
+	    &:active, &.is-active {
+	        #button > .btn-active ();
+	    }
+	    
+	    &:disabled, &.is-disabled, &[disabled] {
+	       #button > .btn-disabled ()
+	    }
+	    
+	    [class^="icon"] {
+	        margin-right: 5px;
+	    }
+	}
+    
+    .btn () {
+	    #button > .btn-core ();    
+	}
+	
+	.btn-action {
+	    #button > .color(@buttonLightTextColor);
+	    #button > .background(@buttonActionBgColor);
+	}
+	
+	.btn-info {
+	    #button > .color(@buttonLightTextColor);
+	    #button > .background(@buttonInfoBgColor);
+	}
+	
+	.btn-large {
+	    .border-radius(9px);
+	    #state > .is-bold();
+	    font-size: 20 / @baseFontSize * 1em;
+	    line-height: 1.7;
+	}
+	
+	.btn-arrow {
+	    &:after {
+	        content: "\0020\00BB";
+	    }
+	}
+    
+}
+
+// ------------------------------------------------
+// @section Tables
+// ------------------------------------------------
+
+#table() {
+
+	.table-1() {
+	    #table > .box-1();
+		
+		&.is-color-inherit {
+	    	color: inherit;
+	    }
+	    
+		thead {
+		    #table > .head-1();
+		}
+	    
+		tbody { 
+		    #table > .body-1();
+		    
+		    // If no <thead> in table
+		    &:first-child {
+		    	> tr {
+		    		&:first-child > td {
+		    			#table > .top-1();
+		    		}
+				}
+		    }
+		}
+	    
+		tr {
+		    #table > .row-1();
+		}
+	
+		th {	
+			#table > .top-1();
+		}
+	
+		td {	
+			#table > .cell-1();	
+		    #baseline > .box-font();  
+		}
+	}	
+	
+	.box-1() {
+		#rounded;
+	    #shadow > .after();
+	    #border;
+	    .box-sizing();
+	    border-collapse: separate;
+	    *border-collapse: collapse; /* IE7 */
+	    border-spacing: 0;
+	    color: @tableTextColor;
+	    #baseline > .box-margin();
+	    width: 100%;
+	}
+	
+	.head-1() {
+		tr {
+	        th {
+	            #shadow > .bottom(table);
+	            background-size: initial;
+	            background-color: @white;
+	        }
+	    }
+	}
+	
+	.body-1() {
+		tr {
+    	    &:nth-child(odd) {
+    	        td {
+                    background: @tableBgColorDark;
+                }
+            }
+            &:nth-child(even) {
+                td {
+                    background: @white;
+                }
+            }
+            
+            // Old browser support
+            &.is-odd {
+                td {
+                    background: @tableBgColorDark;
+                }
+            }
+            &.is-even {
+                td {
+                    background: @white;
+                }
+            }
+	    }
+	}
+	
+	.cell-1() {
+	    #border > .left();
+	    #border > .top();
+	    padding: 0 @baseSpacing;
+	    vertical-align: top;
+	    &:first-child {
+	        border-left: none;
+	    }
+	}
+	
+	.row-1() {
+		&:last-child {
+	        td {
+	            &:first-child {
+	                #rounded > .bottom-left();
+	            }
+	            &:last-child {
+	                #rounded > .bottom-right();
+	            }
+	            &:only-child {
+	               #rounded > .last();
+	            }
+	        }
+	    }
+	}
+	
+	.top-1() {
+		#table > .cell-1();
+	    border-top: none;
+	    color: @tableHeadlineColor;
+	    #state > .is-heading();
+	    #baseline > .box-font(@baseFontSize+2); 
+	    #state > .is-medium();
+	    text-align: left;
+	    vertical-align: bottom;
+	    
+	    &:first-child {
+	        #rounded > .top-left();
+	    }
+	    &:last-child {
+	        #rounded > .top-right();
+	    }
+	    &:only-child {
+	        #rounded > .first();
+	    }
+	}
+	
+}
+
+// ------------------------------------------------
+// @section Icons
+// ------------------------------------------------
+
+#icon() {
+	
+	.plaque-common() {		
+		background: url("img/plaque-sprite.png") no-repeat scroll transparent;
+		position: relative;	
+		display: inline-block;	
+	} 
+	
+	.create-plaque-class(@size) {
+		#icon > .create-plaque-class('','','',@size);
+	}
+	
+	.plaque-hover(@size) when (@size = 128) {
+	   background-position: -181px 0;
+	}
+	
+	.plaque-hover(@size) when (@size = 64) {
+	   background-position: -91px -190px;
+	}
+	
+	.plaque-hover(@size) when (@size = 32) {
+	   background-position: -46px -287px;
+	}
+	
+	.plaque-hover(@size) when (@size = 16) {
+	   background-position: -23px -339px;
+	}
+	
+	.create-plaque-class(@elem, @ielem,@prefix,@size) when (@size = 128){		
+		(~"a:hover @{elem}.@{prefix}plaque-@{size}") {				
+	        #icon > .plaque-hover(@size);      	
+		}
+		
+		(~"@{elem}.@{prefix}plaque-@{size}") {	
+			#icon > .plaque-common();
+			background-position: 0 0;
+        	height: 185px;
+        	width: 180px;
+        	
+        	#icon > .create-plaque-iconsize-common-class(@elem, @ielem,@prefix,@size);
+		}
+	}		
+	
+	.create-plaque-class(@elem, @ielem,@prefix,@size) when (@size = 64){
+		(~"a:hover @{elem}.@{prefix}plaque-@{size}") {				
+	        #icon > .plaque-hover(@size);      	
+		}
+		
+		(~"@{elem}.@{prefix}plaque-@{size}") {
+			#icon > .plaque-common();
+			background-position: 0 -190px;
+	        height: 95px;
+	        width: 90px;
+	                	
+        	#icon > .create-plaque-iconsize-common-class(@elem, @ielem,@prefix,@size);
+		}
+	}
+	
+	.create-plaque-class(@elem, @ielem,@prefix,@size) when (@size = 32){
+		(~"a:hover @{elem}.@{prefix}plaque-@{size}") {				
+	        #icon > .plaque-hover(@size);     	
+		}
+		
+		(~"@{elem}.@{prefix}plaque-@{size}") {
+			#icon > .plaque-common();
+			background-position: 0 -287px;
+	        height: 48px;
+	        width: 45px;
+	        
+        	#icon > .create-plaque-iconsize-common-class(@elem, @ielem,@prefix,@size);
+		}
+	}
+	
+	.create-plaque-class(@elem, @ielem,@prefix,@size) when (@size = 16){
+		(~"a:hover @{elem}.@{prefix}plaque-@{size}") {				
+	        #icon > .plaque-hover(@size);      	
+		}
+		
+		(~"@{elem}.@{prefix}plaque-@{size}") {
+			#icon > .plaque-common();
+			background-position: 0 -339px;
+	        height: 24px;
+	        width: 22px;
+	         	
+        	#icon > .create-plaque-iconsize-common-class(@elem, @ielem,@prefix,@size);        	
+		}
+	}
+	
+	.create-plaque-iconsize-common-class(@elem, @ielem,@prefix,@size) {	
+		(~'> @{ielem}[class*="@{prefix}icon-@{size}"]') {					
+			position: absolute;
+	        left: 50%;
+			margin-left: -1px*@size/2;
+			top: 50%;
+			margin-top: -1px*@size/2;
+		}
+	}
+	.create-plaque-iconsize-common-class(@size) {
+		#icon > .create-plaque-iconsize-common-class('','','',@size);
+	}
+	
+	.common(){
+		display: inline-block;
+	    .ie7-inline-block();
+	    overflow: hidden;
+	    //.opacity(55.5);
+	    vertical-align: middle;
+	}
+	
+	.bg(@size){
+		background: url("img/icon-sprite_@{size}x@{size}.png") no-repeat scroll transparent;
+        height: @size*1px;
+        width: @size*1px;
+	}
+		
+	.bg-index(@size, @row, @column){
+		background-position: -2*@column*@size*1px -2*@row*@size*1px;
+	}	
+	
+	.create-class(@elem,@prefix, @size, @name, @row, @column) {
+		(~"@{elem}.@{prefix}icon-@{size}-@{name}") {										
+			#icon > .bg-index(@size, @row, @column);	
+		}
+	}
+	
+	.create-class(@size, @name, @row, @column) {
+		#icon > .create-class('','', @size, @name, @row, @column);	
+	}
+	
+	.create-common-class(@elem, @prefix) {		
+		(~'@{elem}[class*="@{prefix}icon-"]') {	
+			#icon > .common();			
+		}
+	}
+	.create-common-class(@prefix) {        
+        #icon > .create-common-class('', @prefix);
+    }
+	.create-common-class() {
+		#icon > .create-common-class('');
+	}
+	
+	.create-size-common-class(@elem, @prefix, @size) {
+        (~'@{elem}[class*="@{prefix}icon-@{size}"]') {                    
+            #icon > .bg(@size);
+        }
+    }
+	.create-size-common-class(@prefix, @size) {
+		#icon > .create-size-common-class('', '', @size);
+	}
+	
+	.create-size-common-class(@size) {							
+		#icon > .create-size-common-class('','', @size);		
+	}
+	
+	.create-icons(@size) {
+		#icon > .create-icons('','', @size);	
+	}
+	
+	//TODO correct icon name and index
+	.create-icons(@elem,@prefix, @size) {		
+			
+		//Row 0				
+		#icon > .create-class(@elem,@prefix,@size, all, 0, 0);//alla				
+		#icon > .create-class(@elem,@prefix,@size, contract, 0, 1);//avtal		
+		#icon > .create-class(@elem,@prefix,@size, payment2, 0, 2);//betalning
+		#icon > .create-class(@elem,@prefix,@size, fixation, 0, 3); //bindning			
+		#icon > .create-class(@elem,@prefix,@size, broadband, 0, 4);//bredband		
+		#icon > .create-class(@elem,@prefix,@size, broadbandpatrol, 0, 5); //bredbandspatrullen
+		#icon > .create-class(@elem,@prefix,@size, mvoip, 0, 6);//bredbandstelefoni
+		#icon > .create-class(@elem,@prefix,@size, coverage, 0, 7);//tackning
+		#icon > .create-class(@elem,@prefix,@size, disruption, 0, 8); //driftstorning
+		#icon > .create-class(@elem,@prefix,@size, email2, 0, 9);//e-mail
+			
+		//Row 1	
+		#icon > .create-class(@elem,@prefix,@size, invoice, 1, 0);//faktura				
+		#icon > .create-class(@elem,@prefix,@size, favorites, 1, 1);//favoriter		
+		#icon > .create-class(@elem,@prefix,@size, fibre, 1, 2); //fiber
+		#icon > .create-class(@elem,@prefix,@size, film, 1, 3);//film			
+		#icon > .create-class(@elem,@prefix,@size, filmsubscriber, 1, 4);//film abbonent		
+		#icon > .create-class(@elem,@prefix,@size, filmpack, 1, 5);//film paket
+		#icon > .create-class(@elem,@prefix,@size, filmtrailer, 1, 6);//trailer
+		#icon > .create-class(@elem,@prefix,@size, resettle2, 1, 7);//flytta
+		#icon > .create-class(@elem,@prefix,@size, heart, 1, 8);//hjarta
+		#icon > .create-class(@elem,@prefix,@size, photo2, 1, 9);//foto
+			
+		//Row 2					
+		#icon > .create-class(@elem,@prefix,@size, family, 2, 0);//familj				
+		#icon > .create-class(@elem,@prefix,@size, cart-buy, 2, 1);//varukorg - kop		
+		#icon > .create-class(@elem,@prefix,@size, home, 2, 2);//hem
+		#icon > .create-class(@elem,@prefix,@size, settings2, 2, 3);//installningar 2			
+		#icon > .create-class(@elem,@prefix,@size, calendar2, 2, 4);//kalender		
+		#icon > .create-class(@elem,@prefix,@size, categories2, 2, 5);//kategorier
+		#icon > .create-class(@elem,@prefix,@size, padlock-locked, 2, 6);//hanglas-stangd 
+		#icon > .create-class(@elem,@prefix,@size, lifestyle, 2, 7);//livsstil
+		#icon > .create-class(@elem,@prefix,@size, message2, 2, 8);//meddelande 2
+		#icon > .create-class(@elem,@prefix,@size, enviroment, 2, 9);//miljo 
+		 		
+		//Row 3					
+		#icon > .create-class(@elem,@prefix,@size, myaccount2, 3, 0);//mina sidor				
+		#icon > .create-class(@elem,@prefix,@size, mycontent, 3, 1);//mitt innehall		
+		#icon > .create-class(@elem,@prefix,@size, mms, 3, 2);//mms
+		#icon > .create-class(@elem,@prefix,@size, mobile, 3, 3);//mobil			
+		#icon > .create-class(@elem,@prefix,@size, mobilebroadband, 3, 4);//mobiltbredband		
+		#icon > .create-class(@elem,@prefix,@size, modem, 3, 5);//modem		
+		#icon > .create-class(@elem,@prefix,@size, musicstore2, 3, 6);//musikbutik
+		#icon > .create-class(@elem,@prefix,@size, onlinephotoalbum, 3, 7);//online fotoalbum
+		#icon > .create-class(@elem,@prefix,@size, update, 3, 8);//uppdatera
+		#icon > .create-class(@elem,@prefix,@size, onthego, 3, 9);//i farten
+				
+		//Row 4						
+		#icon > .create-class(@elem,@prefix,@size, priceplan2, 4, 0);//prisplan 2				
+		#icon > .create-class(@elem,@prefix,@size, affordable, 4, 1);//prisvart		
+		#icon > .create-class(@elem,@prefix,@size, radio, 4, 2);//radio
+		#icon > .create-class(@elem,@prefix,@size, costcontrol, 4, 3);//kostnadskontroll			
+		#icon > .create-class(@elem,@prefix,@size, safestorage, 4, 4);//saker forvaring		
+		#icon > .create-class(@elem,@prefix,@size, security, 4, 5);//sakerhet	
+		#icon > .create-class(@elem,@prefix,@size, latestnews, 4, 6);//TODO senaste nytt
+		#icon > .create-class(@elem,@prefix,@size, sms2, 4, 7);//sms
+		#icon > .create-class(@elem,@prefix,@size, search, 4, 8);//sok
+		#icon > .create-class(@elem,@prefix,@size, games, 4, 9);//spel
+		
+		//Row 5 				
+		#icon > .create-class(@elem,@prefix,@size, sports, 5, 0);//sport				
+		#icon > .create-class(@elem,@prefix,@size, voice, 5, 1);//telefoni	
+		#icon > .create-class(@elem,@prefix,@size, priceplan, 5, 2);//prisplan == abonnemang
+		#icon > .create-class(@elem,@prefix,@size, additional, 5, 3);//tillagg == plustjanst		
+		#icon > .create-class(@elem,@prefix,@size, services, 5, 4);//tjanster 
+		#icon > .create-class(@elem,@prefix,@size, tv, 5, 5);//tv
+		#icon > .create-class(@elem,@prefix,@size, entertainment, 5, 6);//underhallning
+		#icon > .create-class(@elem,@prefix,@size, wheater-cloudy, 5, 7);//vader == molnigt				
+		#icon > .create-class(@elem,@prefix,@size, relatedtopics, 5, 8);//relaterade amnen				
+		#icon > .create-class(@elem,@prefix,@size, vault, 5, 9); //TODO missing name??? kanske kassaskap	
+		
+		//Row 6 				
+		#icon > .create-class(@elem,@prefix,@size, simcard, 6, 0);//simkort
+		#icon > .create-class(@elem,@prefix,@size, prepaid2, 6, 1);//kontantkort
+		#icon > .create-class(@elem,@prefix,@size, smartphonesupport, 6, 2);//smartphone guider
+		#icon > .create-class(@elem,@prefix,@size, additional2, 6, 3);//plus tjanster
+		#icon > .create-class(@elem,@prefix,@size, coverage-operations, 6, 4);//tackning o drift
+		#icon > .create-class(@elem,@prefix,@size, costcontrol2, 6, 5);//kostnadskontroll
+		#icon > .create-class(@elem,@prefix,@size, contract2, 6, 6);//villkor och pris
+		#icon > .create-class(@elem,@prefix,@size, forms, 6, 7);//blanketter och broschyrer
+		#icon > .create-class(@elem,@prefix,@size, all2, 6, 8);//alla
+		#icon > .create-class(@elem,@prefix,@size, payment, 6, 9);//betalning
+		
+		//Row 7
+		#icon > .create-class(@elem,@prefix,@size, payment3, 7, 0);//betalning
+		#icon > .create-class(@elem,@prefix,@size, payment4, 7, 1);//betalning
+		#icon > .create-class(@elem,@prefix,@size, payment5, 7, 2);//betalning
+		#icon > .create-class(@elem,@prefix,@size, payment6, 7, 3);//betalning
+		#icon > .create-class(@elem,@prefix,@size, padlock-unlocked, 7, 4);//hanglas oppen
+		#icon > .create-class(@elem,@prefix,@size, settings, 7, 5);//installningar
+		#icon > .create-class(@elem,@prefix,@size, settings3, 7, 6);//installningar
+		#icon > .create-class(@elem,@prefix,@size, settings4, 7, 7);//installningar
+		#icon > .create-class(@elem,@prefix,@size, photo3, 7, 8);//foto
+		#icon > .create-class(@elem,@prefix,@size, photo4, 7, 9);//foto
+		
+		//Row 8
+		#icon > .create-class(@elem,@prefix,@size, photo5, 8, 0);//foto
+		#icon > .create-class(@elem,@prefix,@size, photo, 8, 1);//foto
+		#icon > .create-class(@elem,@prefix,@size, favorites2, 8, 2);//favotiter
+		#icon > .create-class(@elem,@prefix,@size, email3, 8, 3);//e-mail
+		#icon > .create-class(@elem,@prefix,@size, email4, 8, 4);//e-mail
+		#icon > .create-class(@elem,@prefix,@size, email, 8, 5);//e-mail
+		#icon > .create-class(@elem,@prefix,@size, email5, 8, 6);//e-mail
+		#icon > .create-class(@elem,@prefix,@size, email6, 8, 7);//e-mail
+		#icon > .create-class(@elem,@prefix,@size, wheater-thunder, 8, 8);//vader
+		#icon > .create-class(@elem,@prefix,@size, wheater-raindrops, 8, 9);//vader
+		
+		//Row 9
+		#icon > .create-class(@elem,@prefix,@size, wheater-rain, 9, 0);//vader
+		#icon > .create-class(@elem,@prefix,@size, wheater-snow, 9, 1);//vader
+		#icon > .create-class(@elem,@prefix,@size, wheater-sun2, 9, 2);//vader
+		#icon > .create-class(@elem,@prefix,@size, wheater-sun, 9, 3);//vader
+		#icon > .create-class(@elem,@prefix,@size, wheater-sun3, 9, 4);//vader
+		#icon > .create-class(@elem,@prefix,@size, navigation2, 9, 5);//navigation - i farten
+		#icon > .create-class(@elem,@prefix,@size, navigation3, 9, 6);//navigation - i farten
+		#icon > .create-class(@elem,@prefix,@size, navigation, 9, 7);//navigation - i farten
+		#icon > .create-class(@elem,@prefix,@size, voice2, 9, 8);//telefoni
+		#icon > .create-class(@elem,@prefix,@size, sms3, 9, 9);//sms
+		
+		//Row 10
+		#icon > .create-class(@elem,@prefix,@size, sms, 10, 0);//sms
+		#icon > .create-class(@elem,@prefix,@size, sms4, 10, 1);//sms
+		#icon > .create-class(@elem,@prefix,@size, resettle, 10, 2);//flytta
+		#icon > .create-class(@elem,@prefix,@size, lifestyle2, 10, 3);//livsstil
+		#icon > .create-class(@elem,@prefix,@size, musicstore, 10, 4);//musikbutik
+		#icon > .create-class(@elem,@prefix,@size, mobilebroadband2, 10, 5);//mobiltbredband
+		#icon > .create-class(@elem,@prefix,@size, calendar, 10, 6);//kalender
+		#icon > .create-class(@elem,@prefix,@size, calendar3, 10, 7);//kalender
+		#icon > .create-class(@elem,@prefix,@size, categories3, 10, 8);//kategorier
+		#icon > .create-class(@elem,@prefix,@size, categories, 10, 9);//kategorier
+		
+		//Row 11
+		#icon > .create-class(@elem,@prefix,@size, categories4, 11, 0);//kategorier
+		#icon > .create-class(@elem,@prefix,@size, categories5, 11, 1);//kategorier
+		#icon > .create-class(@elem,@prefix,@size, latestnews2, 11, 2);//senaste nytt
+		#icon > .create-class(@elem,@prefix,@size, games2, 11, 3);//spel
+		#icon > .create-class(@elem,@prefix,@size, fixation2, 11, 4);//bindning
+		#icon > .create-class(@elem,@prefix,@size, free-family, 11, 5);//PRODUCT - fritt familj
+		#icon > .create-class(@elem,@prefix,@size, free-voice-sweden, 11, 6);//PRODUCT - tal fritt sverige
+		#icon > .create-class(@elem,@prefix,@size, secure-mobile, 11, 7);//PRODUCT - saker mobil
+		#icon > .create-class(@elem,@prefix,@size, prepaid, 11, 8);//PRODUCT - kontantkort
+		#icon > .create-class(@elem,@prefix,@size, telenor-appen, 11, 9);//telenor-appen
+		
+		//Row 12
+		#icon > .create-class(@elem,@prefix,@size, insurance, 12, 0);//PRODUCT - forsakring
+		#icon > .create-class(@elem,@prefix,@size, borderless, 12, 1);//PRODUCT - granslost
+		#icon > .create-class(@elem,@prefix,@size, global, 12, 2);//PRODUCT - global
+		#icon > .create-class(@elem,@prefix,@size, passport, 12, 3);//PRODUCT - passport
+		#icon > .create-class(@elem,@prefix,@size, mappin, 12, 4);//map pin
+		#icon > .create-class(@elem,@prefix,@size, faq, 12, 5);//vanliga fragor
+		#icon > .create-class(@elem,@prefix,@size, facebook, 12, 6);//facebook
+		#icon > .create-class(@elem,@prefix,@size, subscription, 12, 7);//abonnemang
+		#icon > .create-class(@elem,@prefix,@size, likes, 12, 8);//gilla
+		#icon > .create-class(@elem,@prefix,@size, myaccount, 12, 9);//mina sidor 
+		
+		//Row 13		
+		#icon > .create-class(@elem,@prefix,@size, youtube, 13, 0);//youtube
+		#icon > .create-class(@elem,@prefix,@size, sms-free-world, 13, 1);//PRODUCT - sms fritt varlden
+		#icon > .create-class(@elem,@prefix,@size, free-surf-europe, 13, 2);//PRODUCT - fri surf europa
+		#icon > .create-class(@elem,@prefix,@size, maybe-you-are-looking-for, 13, 3);//du kanske letar efter...
+		#icon > .create-class(@elem,@prefix,@size, ask-emma, 13, 4);//fraga emma
+		#icon > .create-class(@elem,@prefix,@size, customer-service-chat, 13, 5);//KS chatten
+		#icon > .create-class(@elem,@prefix,@size, customer-service-call, 13, 6);//KS ring oss
+		#icon > .create-class(@elem,@prefix,@size, customer-service-email, 13, 7);//KS email					
+		#icon > .create-class(@elem,@prefix,@size, service-workshop, 13, 8);//service verkstad
+		#icon > .create-class(@elem,@prefix,@size, tablet, 13, 9);//surfplatta
+		
+		//Row 14		
+		#icon > .create-class(@elem,@prefix,@size, ipad-subscription, 14, 0);//ipad abonnemnag
+		#icon > .create-class(@elem,@prefix,@size, home-solutions, 14, 1);//hemmalosningar
+		#icon > .create-class(@elem,@prefix,@size, customer-chat-closed, 14, 2);//ipad abonnemnag
+		#icon > .create-class(@elem,@prefix,@size, customer-chat-maintenance , 14, 3);//ipad abonnemnag
+		#icon > .create-class(@elem,@prefix,@size, customer-chat-open, 14, 4);//ipad abonnemnag
+		#icon > .create-class(@elem,@prefix,@size, twitter, 14, 5);//twitter  
+	}
+	
+}
+
+// ------------------------------------------------
+// @section Lists
+// ------------------------------------------------
+
+#linklist() {
+	.items() {
+        list-style-type: none;
+        padding-left: 0;
+        margin-left: 0;
+        
+        > li {
+        	display: list-item;
+            > a {
+                display: inline-block;         
+            }   
+            > img {
+                vertical-align: text-bottom;
+            }         
+        }        
+    }
+    
+    .horizontal-items() {
+        list-style-type: none;
+        padding: 0; 
+        margin: 0;
+	
+	    > li {
+	        display: inline;
+	        margin-right: @baseSpacing;
+	        
+	        > a {
+	            display: inline;
+	        }     
+	    } 	    
+	}
+	
+	.icon-items(@size, @name, @row, @column) {                
+        color: @gray;
+        font-size: @smallFontSize * 1px;
+        list-style-type: none;
+        padding-left: 0;
+        margin-left: 0;
+        
+        > li {       
+            display: list-item;      	   
+        	&:before {  	          
+	            #icon > .common();      
+	            #icon > .bg(@size);
+	            #icon > .create-class(@size, @name, @row, @column);
+	            content: "";
+				float: left; 
+				padding-left: 0.2*@size*1px;
+    		}       
+    		
+    		> a {
+                display: inline-block;            
+            }                                   
+        }                
+    }
+    
+    .horizontal-icon-items(@size, @name, @row, @column) {                        
+        #linklist > .horizontal-items();
+        > li {          
+        	&:before {  	          
+	            #icon > .common();      
+	            #icon > .bg(@size);
+	            #icon > .create-class(@size, @name, @row, @column);
+	            content: "";				
+				padding-left: 0.2*@size*1px;
+    		}                                
+        }        
+        
+    }
+}
+
+#contentlist() {
+	.items() {
+		padding: 0; 
+		margin: 0;
+	    
+	    &:not(:last-child) {
+	        #shadow > .after();
+	        #border > .bottom();
+	    }
+
+	    &:last-child li:last-child {
+	        .border-radius(0 0 @boxBorderRadius @boxBorderRadius);
+	    }
+	    
+	    > li {
+	        #border .top();
+	        list-style-type: none;
+	        padding: @baseSpacing*0.75 0 @baseSpacing*0.75 @baseSpacing;
+	
+	        #background > .zebra();
+	        
+	        &:first-child {
+	            #shadow > .before();
+	        }
+	        
+	        > em {
+	            margin-right: @baseSpacing*0.75;
+	        }
+	    }
+	}
+}
+
+
+#bullet() {
+	.usplist() { 
+		list-style-image: url("img/bullet-usp.png");   
+    }    
+    
+    .checklist() {        
+		list-style-type: none;
+		padding-left: 0;
+		margin-left: 0;
+		
+		> li {
+			background: url("img/bullet-check.png") left top no-repeat;
+			padding-left: 35px;
+			min-height: 25px;
+			margin-bottom: @baseSpacing/2;
+		}         
+    } 
+}
+

@@ -1,0 +1,57 @@
+//
+// oldie.less
+//
+// Old IE excpetions - version 7 and 8
+//
+// @project Telenor NSI
+// @version
+// @author
+// @copyright 2011-2012
+// @license Copyright Telenor Sverige AB
+//
+// ------------------------------------------------
+
+// ------------------------------------------------
+// @section Button
+// ------------------------------------------------ 
+
+.ie7 {
+    button {
+        //width: 0;
+        overflow: visible;
+        
+        &.btn {
+            //border: 0;
+            //padding-top: 0;
+            //padding-bottom: 0;
+        }
+    }
+    
+    td button {
+        width: auto;
+    }
+    
+   section ul.telenor-contentlist-items {
+        #border > .top();
+        #border > .bottom();
+    }
+    section ul.telenor-contentlist-items.is-last {
+        border-bottom: none;
+    }
+}
+
+.ie7, .ie8 {
+	.btn-action > .icon.icon-cart-white {
+        background: @buttonActionBgColor url("img/icon-cart.png") no-repeat scroll;
+    }
+}
+
+
+.ie8 {
+	section ul.telenor-contentlist-items {
+        #border > .bottom();
+    }
+    section ul.telenor-contentlist-items.is-last {
+        border-bottom: none;
+    }
+}

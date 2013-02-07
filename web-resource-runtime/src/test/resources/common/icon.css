@@ -1,0 +1,47 @@
+/**
+* ------------------------------------------------
+* @section Icon base class
+* ------------------------------------------------
+*/
+/** sprite: test; sprite-image: url('img/sprite.png'); sprite-layout: horizontal */
+/*
+.icon {
+    #icon > .common();
+}
+*/
+/**
+* ------------------------------------------------
+* @section Extended Icons
+* ------------------------------------------------
+*/
+.icon-cart-white {
+  background-image: url("img/icon-cart.png");
+  /** sprite-ref: test */
+
+  height: 30px;
+  width: 34px;
+}
+.icon-checked-white {
+  background-image: url("img/preamble-checked.png");
+  /** sprite-ref: test */
+
+  height: 29px;
+  width: 36px;
+}
+.icon-expand {
+  background-image: url("img/icon-expand.png");
+  /** sprite-ref: test */
+
+  width: 18px;
+  height: 18px;
+}
+.icon-expand.is-selected {
+  background-position: -18px 0;
+}
+.icon-filter {
+  background-image: url("img/icon-filter.png");
+  /** sprite-ref: test */
+
+  height: 12px;
+  width: 13px;
+}
