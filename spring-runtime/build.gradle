@@ -13,3 +13,12 @@ dependencies {
 	compile elApi
 	compile project(':bootstrap')
 }
+
+
+processResources << {
+    copy {
+        into "$buildDir/resources/main/lib"
+        from configurations.compile
+        include 'spring-**'
+    }
+}
