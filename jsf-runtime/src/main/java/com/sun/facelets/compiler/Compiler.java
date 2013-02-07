@@ -30,14 +30,12 @@ import javax.faces.context.FacesContext;
 
 import com.sun.facelets.FaceletException;
 import com.sun.facelets.FaceletHandler;
-import com.sun.facelets.tag.CompositeTagDecorator;
-import com.sun.facelets.tag.CompositeTagLibrary;
-import com.sun.facelets.tag.TagDecorator;
-import com.sun.facelets.tag.TagLibrary;
+import com.sun.facelets.tag.*;
 import com.sun.facelets.tag.ui.UILibrary;
 import com.sun.facelets.util.ParameterCheck;
 import com.sun.facelets.util.FacesAPI;
 import com.sun.facelets.util.ReflectionUtil;
+import org.tdr.jsf.runtime.PluggableTagLibrary;
 
 /**
  * A Compiler instance may handle compiling multiple sources
@@ -70,6 +68,8 @@ public abstract class Compiler {
     private final Map features = new HashMap();
 
     private boolean initialized = false;
+
+//    private final Map<String, PluggableTagLibrary> pluggableTagLibraries = new HashMap<String, PluggableTagLibrary>();
 
     /**
      * 
@@ -168,10 +168,26 @@ public abstract class Compiler {
 
     public final void addTagLibrary(TagLibrary library) {
         ParameterCheck.notNull("library", library);
-        if (!this.libraries.contains(library)) {
-        	log.info("Adding tag library: " + library.getClass() + ", hash: " + library.getClass().hashCode());
-            this.libraries.add(library);
-        }
+
+//        if ( library instanceof AbstractTagLibrary ) {
+//            String namespace =  ((AbstractTagLibrary)library).getNamespace();
+//            PluggableTagLibrary pluggableTagLibrary = this.pluggableTagLibraries.get(namespace);
+//            if ( pluggableTagLibrary == null ) {
+//                pluggableTagLibrary = new PluggableTagLibrary(namespace);
+//                this.pluggableTagLibraries.put(namespace, pluggableTagLibrary);
+//                this.libraries.add(pluggableTagLibrary);
+//            }
+//            if ( ! pluggableTagLibrary.containsConcreteTagLibrary(library) ) {
+//                log.info("Adding pluggable tag library: " + library);
+//                pluggableTagLibrary.addConcreteTagLibrary(library);
+//            }
+//        }
+//        else {
+            if (!this.libraries.contains(library)) {
+                log.info("Adding tag library: " + library.getClass() + ", hash: " + library.getClass().hashCode());
+                this.libraries.add(library);
+            }
+//        }
     }
     
     /**
@@ -180,7 +196,21 @@ public abstract class Compiler {
      */
     public final void removeTagLibrary(TagLibrary library) {
     	log.info("Removing tag library: " + library.getClass() + ", hash: " + library.getClass().hashCode());
-    	this.libraries.remove(library);
+
+//        if ( library instanceof AbstractTagLibrary ) {
+//            String namespace =  ((AbstractTagLibrary)library).getNamespace();
+//            PluggableTagLibrary pluggableTagLibrary = this.pluggableTagLibraries.get(namespace);
+//            if ( pluggableTagLibrary != null && pluggableTagLibrary.containsConcreteTagLibrary(library) ) {
+//                log.info("Removing pluggable tag library: " + library);
+//                pluggableTagLibrary.removeConcreteTagLibrary(library);
+//                if ( pluggableTagLibrary.isEmpty() ) {
+//                    this.libraries.remove(pluggableTagLibrary);
+//                }
+//            }
+//        }
+//        else {
+            this.libraries.remove(library);
+//        }
     	log.info("Current tag libraries: " + this.libraries);
     	
     }
