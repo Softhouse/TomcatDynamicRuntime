@@ -60,3 +60,7 @@ subprojects {
 	
 }
 
+allprojects {
+    apply plugin: 'idea'
+}
+

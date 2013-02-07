@@ -1,4 +1,7 @@
 include 	'bootstrap',
 		'spring-runtime', 
 		'jsf-runtime',
+		'web-resource-processing',
+		'web-resource-runtime',
+        	'reference-site',
 		'tdr-server'

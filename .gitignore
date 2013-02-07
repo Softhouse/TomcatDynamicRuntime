@@ -43,6 +43,12 @@ Thumbs.db
 .externalToolBuilders
 bin/
 
+# IDEA
+##################
+*.iml
+.idea/
+out/
+
 # Gradle
 ##################
 build/
