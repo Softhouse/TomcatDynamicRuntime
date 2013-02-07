@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:refsite="http://tdr.org/tag"
+                template="templates/test-page-template.xhtml">
+
+    <ui:define name="content">
+
+        <h1>TEST OF TAGLIBRARY</h1>
+        <refsite:testTag name="param1" value="VALUE1"/>
+        <refsite:testTag2 name="param2" value="VALUE2"/>
+
+        <p>PARAM1 value: #{param1}</p>
+        <p>PARAM2 value: #{param2}</p>
+
+        <p>Invoking functions here...</p>
+        #{refsite:doStuff()}
+        #{refsite:doStuff2()}
+
+    </ui:define>
+
+
+</ui:composition>

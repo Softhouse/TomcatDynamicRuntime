@@ -1,0 +1,13 @@
+<webresources>
+    <webresource type="css" name="css/target.css">
+        <module type="less" name="css/style.less" prio="2">
+            <resource path="css/img"/>
+        </module>
+    </webresource>
+    <webresource type="javascript" name="js/target.js">
+        <module type="javascript" name="js/array.filter.js" prio="2"/>
+        <module type="javascript" name="js/tpp.events.js" prio="1"/>
+        <module type="javascript" name="js/tpp.log.js" prio="3"/>
+        <module type="javascript" name="js/tpp.mediaqueries.js" prio="2"/>
+    </webresource>
+</webresources>
