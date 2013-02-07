@@ -28,6 +28,8 @@ public class RuntimeApplication {
 	public static final String RUNTIMES_HEADER = "TDR-Runtimes";
 	
 	public static final String CURRENT_BUNDLE_CLASS_LOADER_TLS = "TDRCurrentBundleClassLoader";
+
+    // TODO: Build support for skip add repository and write directly into the webapp
 	
 	// TODO: Use BundleMetadata for this?? Version=null for any version?
 	// Version Range class? version="[1.2.0,1.2.9]"
@@ -36,7 +38,9 @@ public class RuntimeApplication {
 	
 	// TODO: Ta hänsyn till absolute ordering???	
 
-	
+
+    // TODO: Fix creation of deployers based on defined deployer factories!!
+
 	/**
 	 * Införa ett TDR-Host header som talar om för bundles att kunna bli deployade i en runtime?
 	 * Då kommer alla GUI komponenter, taglibs etc bli automatisk deployade.
@@ -67,6 +71,7 @@ public class RuntimeApplication {
 	private RuntimeDeployerRegistry runtimeDeployerRegistry;
 	private ArrayList<TDRBundle> pendingUndeployedBundles = new ArrayList<TDRBundle>();
 	private Map<TDRBundle, List<TDRBundle>> bundleDependencies = new HashMap<TDRBundle, List<TDRBundle>>();
+    private File applicationBasePath;
 	
 	/*
 	 * Future extension:
@@ -84,11 +89,14 @@ public class RuntimeApplication {
 	
 	/**
 	 * Constructor
-	 * @param applicationBundle
+	 * @param manifest
 	 * @param bundleRepository
 	 */
-	public RuntimeApplication(Manifest manifest, TDRBundleRepository bundleRepository) {
-		this.bundleRepository = bundleRepository;
+	public RuntimeApplication(Manifest manifest, TDRBundleRepository bundleRepository, File applicationBasePath) {
+
+        log.info("Creating runtime application with base path: " + applicationBasePath);
+        this.bundleRepository = bundleRepository;
+        this.applicationBasePath = applicationBasePath;
 
 		String runtimesStr = manifest.getMainAttributes().getValue(RUNTIMES_HEADER);
 		
@@ -101,6 +109,7 @@ public class RuntimeApplication {
 		}
 		
 		// TEMP FIX
+        // TODO: Fix this to a more robust solution!!!
 		this.runtimeDeployerRegistry = new RuntimeDeployerRegistry(null);
 		this.runtimeDeployerRegistry.setInstance();
 	}
@@ -120,6 +129,10 @@ public class RuntimeApplication {
 		this.bundleRepository.unregisterRuntimeApplication(this);
 		// TODO: Undeploy runtime fragements here...???
 	}
+
+    public File getApplicationBasePath() {
+        return this.applicationBasePath;
+    }
 	
 	public ClassLoader getClassLoader() {
 		
@@ -421,14 +434,18 @@ public class RuntimeApplication {
 	 * @param bundle
 	 * @param parent
 	 */
+
+    // TODO: Remove parent & child here???
 	public void doDeployBundle(TDRBundle bundle, TDRBundle parent, TDRBundle child) {
 						
-		if ( this.isActiveInRuntime(bundle) ) {		
+		if ( this.isActiveInRuntime(bundle) ) {
 				
 			log.info("Deploying TDR bundle: " + bundle.getBundle().getSymbolicName());
 					
 			OSGiJarClassLoader bundleCL = bundle.addToClassLoader((OSGiWebAppLoader) this.servletContext.getClassLoader());
-			
+
+            // TODO: Create a deploy context here instead of adding TLS data on the registry
+            this.runtimeDeployerRegistry.setCurrentApplication(this);
 			this.runtimeDeployerRegistry.setCurrentBundle(bundle);
 			this.runtimeDeployerRegistry.setInstance();
 			ClassLoader currentContextCL = Thread.currentThread().getContextClassLoader();
@@ -446,6 +463,16 @@ public class RuntimeApplication {
 						this.addDependendency(this.runtimeDeployerRegistry.getDeployerOwner(deployer), bundle);
 					}
 				}
+                if ( bundle.getDeployerFactoryClassName() != null ) {
+                    try {
+                        RuntimeDeployerFactory deployerFactory = (RuntimeDeployerFactory) bundleCL.loadClass(bundle.getDeployerFactoryClassName()).newInstance();
+                        RuntimeDeployer deployer = deployerFactory.createDeployer();
+                        log.info("Creating a new deployer of class via factory class: " + bundle.getDeployerFactoryClassName());
+                        RuntimeDeployerRegistry.instance().addDeployer(deployer);
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                        log.error("Could not create deployer: " + bundle.getDeployerFactoryClassName());
+                    }
+                }
 				int newDeployersSize = this.runtimeDeployerRegistry.getDeployers().size();
 				if ( newDeployersSize > deployersSize) {
 					// New deployer(s) added -> Invoke it
@@ -463,6 +490,7 @@ public class RuntimeApplication {
 			}
 			finally {
 				Thread.currentThread().setContextClassLoader(currentContextCL);
+                this.runtimeDeployerRegistry.clearCurrentApplication();
 				this.runtimeDeployerRegistry.clearCurrentBundle();
 				this.runtimeDeployerRegistry.clearInstance();
 				TLSReference.clear(CURRENT_BUNDLE_CLASS_LOADER_TLS);

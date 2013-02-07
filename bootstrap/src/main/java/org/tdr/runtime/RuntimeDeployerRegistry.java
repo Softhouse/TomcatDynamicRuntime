@@ -13,7 +13,10 @@ import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 
 public class RuntimeDeployerRegistry {
-	
+
+    // TODO: Improve the handling of TLS data. Have a specific deploy context instead on TLS??
+    // TODO: Do major refactoring of this class to get rid of all TLS states!
+
 	private static final Log log = LogFactory.getLog(RuntimeDeployerRegistry.class);
 	
 	public static final String CONTEXT_NAME = "TDR.RuntimeDeployerRegistry";
@@ -21,6 +24,7 @@ public class RuntimeDeployerRegistry {
 	private List<RuntimeDeployer> deployers = new ArrayList<RuntimeDeployer>();
 	private Map<RuntimeDeployer, TDRBundle> deployerOwners = new HashMap<RuntimeDeployer, TDRBundle>();
 	private ThreadLocal<TDRBundle> currentbundle = new ThreadLocal<TDRBundle>();
+    private ThreadLocal<RuntimeApplication> currentApplication = new ThreadLocal<RuntimeApplication>();
 	private ServletContext servletContext;
 	private static ThreadLocal<RuntimeDeployerRegistry> instance = new ThreadLocal<RuntimeDeployerRegistry>();
 	
@@ -42,10 +46,22 @@ public class RuntimeDeployerRegistry {
 	public void setCurrentBundle(TDRBundle currentBundle) {
 		this.currentbundle.set(currentBundle);
 	}
+
+    public void setCurrentApplication(RuntimeApplication runtimeApplication) {
+        this.currentApplication.set(runtimeApplication);
+    }
+
+    public RuntimeApplication getCurrentApplication() {
+        return this.currentApplication.get();
+    }
 	
 	public void clearCurrentBundle() {
 		this.currentbundle.remove();
 	}
+
+    public void clearCurrentApplication() {
+        this.currentApplication.remove();
+    }
 	
 	public void setInstance() {
 		instance.set(this);

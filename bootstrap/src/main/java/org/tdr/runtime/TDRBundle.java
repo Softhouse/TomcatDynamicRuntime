@@ -50,6 +50,7 @@ public class TDRBundle {
 	public static final String HOST_PRIO_HEADER				= "TDR-HOST-PRIO";
 	public static final String DEPENDS_OF_HEADER			= "TDR-DEPENDS-OF";	
 	public static final String RESOURCE_DIRECTORY_HEADER	= "TDR-RESOURCE-DIRECTORY";
+    public static final String DEPLOYER_FACTORY_HEADER      = "TDR-DEPLOYER-FACTORY";
 	public static final String WEB_XML_FRAGMENT_NAME		= "META-INF/web-fragment.xml";
 	public static final String RESOURCE_LIST_FILENAME		= "resource_list.txt";
 	
@@ -58,11 +59,13 @@ public class TDRBundle {
 	private String resourcePath;
 	private WebXml webXml;
 	private List<File> jarFiles = null;
+    private String deployerFactoryClassName;
 	
 	public static boolean isTDRBundle(Bundle bundle) {
 		Dictionary<String,String> headers = bundle.getHeaders();
 		return headers.get(EXPORTED_PATHS_HEADER) != null ||
-			   headers.get(HOST_HEADER) != null;
+			   headers.get(HOST_HEADER) != null ||
+               headers.get(DEPLOYER_FACTORY_HEADER) != null;
 	}
 	
 	public static boolean isTDRBundleFragment(Bundle bundle) {
@@ -85,6 +88,7 @@ public class TDRBundle {
 		if ( resourcePathHeader != null ) {
 			this.resourcePath = System.getProperty("catalina.home") + "/" + resourcePathHeader;
 		}
+        this.deployerFactoryClassName = this.getHeaderValue(DEPLOYER_FACTORY_HEADER);
 		this.buildWebXml(webXmlParser);	
 	}
 	
@@ -119,6 +123,10 @@ public class TDRBundle {
 		}
 		return 0;
 	}
+
+    public String getDeployerFactoryClassName() {
+        return this.deployerFactoryClassName;
+    }
 	
 	public void addJarsToClassLoader(WebappClassLoader classLoader) {
 		this.buildJarList();
@@ -195,7 +203,7 @@ public class TDRBundle {
 		if ( bundleBaseDir.exists() ) {
 			return ( bundleBaseDir.lastModified() < this.bundle.getLastModified() );
 		}
-		return false;
+		return true; // if not exists before it is considered as modified
 	}
 	public void install() throws IOException {
 				
@@ -217,6 +225,7 @@ public class TDRBundle {
 		}
 		this.copyLibsTo(this.basePath);
 		this.copyClassesTo(this.getClassPath());
+        this.copyResourceSourcesTo(this.basePath);
 		
 	}
 	
@@ -310,6 +319,11 @@ public class TDRBundle {
 			}
 		}
 	}
+
+    private void copyResourceSourcesTo(String path) throws IOException {
+        ResourceDirectory sourceDirectory = ResourceDirectory.buildDirectories("resource-sources", this);
+        sourceDirectory.copyTo(path);
+    }
 	
 	// TODO: Refactor and merge with equalent method in ResourceFile
 	private void readUrlIntoFile(String path, URL url) throws IOException {
@@ -351,6 +365,10 @@ public class TDRBundle {
 	public String getResourcePath() {
 		return this.resourcePath != null ? this.resourcePath : this.basePath;
 	}
+
+    public String getResourceSourcePath() {
+        return this.basePath + "/resource-sources";
+    }
 	
 	public File getResource(String path) {	
 		if ( ! path.startsWith("/lib") ) {

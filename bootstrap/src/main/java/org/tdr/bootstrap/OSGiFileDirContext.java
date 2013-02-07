@@ -66,7 +66,7 @@ public class OSGiFileDirContext extends VirtualDirContext {
 		Manifest manifest = this.getManifest();
 		if ( manifest != null && RuntimeApplication.isRuntimeManifest(manifest) ) {
 			log.info("Starting runtime application...");
-			this.runtimeApplication = new RuntimeApplication(manifest, this.bundleRepository);
+			this.runtimeApplication = new RuntimeApplication(manifest, this.bundleRepository, this.base);
 			this.runtimeApplication.start();
 			//this.reallocateResourcePaths();
 			this.setExtraResourcePaths(this.baseResourcePaths + this.runtimeApplication.getResourcePaths());
