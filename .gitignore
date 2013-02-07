@@ -48,6 +48,9 @@ bin/
 *.iml
 .idea/
 out/
+*.ipr
+*.iml
+*.iws
 
 # Gradle
 ##################

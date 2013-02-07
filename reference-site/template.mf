@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: reference-site 
+Bundle-Version: 0.0.1
+Bundle-Name: TDR Reference Site 
+TDR-Host: JSF Runtime, Web Resource Runtime
+TDR-Host-Prio: 3
+TDR-Exported-Paths: webResources=
+
+
+

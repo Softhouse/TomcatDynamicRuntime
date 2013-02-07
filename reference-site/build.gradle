@@ -1,0 +1,17 @@
+// Reference Site 
+        
+version = "0.0.1"
+
+jar {
+	manifest { from ('template.mf') }
+}
+
+dependencies {
+    	
+	compile jsfApi
+	compile jsfFacelets
+	compile elApi
+	compile project(':bootstrap')	
+}
+
+// TODO: Take libs from dependencies
